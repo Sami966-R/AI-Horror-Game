@@ -1,0 +1,301 @@
+/* ==========================================================================
+   SUBLEVEL — design tokens
+   Palette: dim facility void + warm lantern amber + rust-red danger accent.
+   Deliberately avoids the near-black/acid-green horror default — the
+   accent here is a lantern, not a warning light.
+   ========================================================================== */
+:root {
+  --bg-void:      #0b0e0c;
+  --bg-panel:     #121815;
+  --bg-panel-2:   #171f1b;
+  --line:         #2a3530;
+
+  --ink:          #d9d3c4;
+  --ink-dim:      #8c8a7c;
+
+  --lantern:      #d9a441;
+  --lantern-dim:  #7a6432;
+  --blood:        #9c3b3b;
+  --blood-dim:    #5c2a2a;
+  --exit-glow:    #5e9c74;
+
+  --font-report:  'Special Elite', 'Courier New', monospace;
+  --font-mono:    'IBM Plex Mono', ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  background: var(--bg-void);
+  color: var(--ink);
+  font-family: var(--font-mono);
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse at 50% -10%, rgba(217,164,65,0.06), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+}
+
+#app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+button, select { font-family: inherit; }
+
+/* ==========================================================================
+   Screens
+   ========================================================================== */
+.screen {
+  display: none;
+  width: 100%;
+  max-width: 720px;
+  animation: fade-in 0.4s ease both;
+}
+.screen--active { display: block; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   Report card (start / outcome screens) — incident-log aesthetic
+   ========================================================================== */
+.report {
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 36px 40px 32px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+  position: relative;
+}
+
+.report__stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--blood);
+  border: 1px solid var(--blood-dim);
+  padding: 4px 10px;
+  border-radius: 2px;
+  transform: rotate(-2deg);
+  margin-bottom: 18px;
+}
+.report__stamp--bad  { color: var(--blood); border-color: var(--blood-dim); }
+.report__stamp--good { color: var(--exit-glow); border-color: #345c42; }
+
+.report__title {
+  font-family: var(--font-report);
+  font-weight: 400;
+  font-size: 52px;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin: 0 0 6px;
+  text-shadow: 0 0 24px rgba(217,164,65,0.18);
+}
+
+.report__subtitle {
+  font-family: var(--font-mono);
+  color: var(--ink-dim);
+  font-size: 13px;
+  margin: 0 0 24px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 20px;
+}
+
+.report__body p {
+  font-family: var(--font-report);
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+.report__brief {
+  margin: 22px 0 26px;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+  padding: 14px 0;
+}
+.brief-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12.5px;
+  padding: 4px 0;
+}
+.brief-key { color: var(--ink-dim); }
+.brief-val { color: var(--lantern); text-align: right; }
+
+.report__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.report--outcome {
+  text-align: center;
+}
+.report--outcome .report__stamp { transform: rotate(-2deg); }
+.report--outcome .report__actions { justify-content: center; }
+
+.outcome-title {
+  font-family: var(--font-report);
+  font-size: 44px;
+  margin: 6px 0 14px;
+  letter-spacing: 0.06em;
+}
+.outcome-title--bad  { color: var(--blood); text-shadow: 0 0 30px rgba(156,59,59,0.35); }
+.outcome-title--good { color: var(--exit-glow); text-shadow: 0 0 30px rgba(94,156,116,0.35); }
+
+.outcome-copy {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-dim);
+  margin: 0 0 26px;
+}
+.outcome-copy span { color: var(--ink); }
+
+/* ==========================================================================
+   Form controls
+   ========================================================================== */
+.difficulty {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+}
+.difficulty select {
+  background: var(--bg-panel-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+.btn {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 13.5px;
+  letter-spacing: 0.03em;
+  padding: 12px 22px;
+  border-radius: 2px;
+  border: 1px solid var(--lantern-dim);
+  background: transparent;
+  color: var(--lantern);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover, .btn:focus-visible {
+  background: var(--lantern);
+  color: #16130a;
+  box-shadow: 0 0 24px rgba(217,164,65,0.35);
+}
+.btn:focus-visible { outline: 2px solid var(--lantern); outline-offset: 3px; }
+.btn--primary { min-width: 180px; }
+
+/* ==========================================================================
+   Game screen / HUD
+   ========================================================================== */
+#screen-game.screen--active {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: none;
+  width: 100%;
+}
+
+.hud {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: var(--bg-panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.hud__group { display: flex; align-items: baseline; gap: 8px; min-width: 90px; }
+.hud__group--center { flex: 1; justify-content: center; min-width: 0; }
+.hud__label { font-size: 10.5px; color: var(--ink-dim); letter-spacing: 0.08em; }
+.hud__value { font-size: 15px; color: var(--lantern); font-weight: 600; }
+.hud__status {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--exit-glow);
+  transition: color 0.2s ease;
+}
+.hud__status--danger { color: var(--blood); animation: pulse-danger 0.6s ease-in-out infinite; }
+
+@keyframes pulse-danger {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.canvas-wrap {
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: #000;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  line-height: 0;
+  max-width: 100%;
+  overflow: auto;
+}
+
+#game-canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.hint {
+  font-size: 11.5px;
+  color: var(--ink-dim);
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+.credits {
+  margin-top: 28px;
+  font-size: 10.5px;
+  color: var(--ink-dim);
+  letter-spacing: 0.03em;
+  text-align: center;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 640px) {
+  .report { padding: 26px 22px 24px; }
+  .report__title { font-size: 40px; }
+  .outcome-title { font-size: 34px; }
+  .report__actions { flex-direction: column; align-items: stretch; }
+  .btn--primary { width: 100%; }
+  .hud { flex-wrap: wrap; gap: 8px 16px; }
+  .hud__group--center { order: 3; width: 100%; justify-content: flex-start; }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .screen, .hud__status--danger { animation: none !important; }
+}

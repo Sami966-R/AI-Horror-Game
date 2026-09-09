@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SUBLEVEL // A Maze-Pursuit AI Demo</title>
+<meta name="description" content="A procedurally generated maze horror game with A* pathfinding AI, built in vanilla JavaScript and HTML5 Canvas." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div id="app">
+
+    <!-- ============================================================ -->
+    <!-- START SCREEN — framed as a redacted incident report          -->
+    <!-- ============================================================ -->
+    <section id="screen-start" class="screen screen--active">
+      <div class="report">
+        <div class="report__stamp">CLASSIFIED // SUBLEVEL-7</div>
+        <h1 class="report__title">SUBLEVEL</h1>
+        <p class="report__subtitle">Incident Log &mdash; Facility Containment Breach</p>
+
+        <div class="report__body">
+          <p>
+            Emergency lighting has failed on Sublevel 7. Your handheld lantern is the
+            only light source between you and the exit stairwell. Something was
+            released from containment before the blackout, and it already knows
+            the floor plan better than you do.
+          </p>
+          <p>
+            Every attempt regenerates the sublevel and reassigns the entity's last
+            known position. It will path directly toward you the moment it senses
+            you &mdash; there is no outrunning a straight line.
+          </p>
+        </div>
+
+        <div class="report__brief">
+          <div class="brief-row"><span class="brief-key">Objective</span><span class="brief-val">Reach the stairwell exit</span></div>
+          <div class="brief-row"><span class="brief-key">Movement</span><span class="brief-val">Arrow keys / WASD</span></div>
+          <div class="brief-row"><span class="brief-key">Hazard</span><span class="brief-val">Contact with the entity ends the attempt</span></div>
+        </div>
+
+        <div class="report__actions">
+          <label class="difficulty">
+            <span>Sublevel size</span>
+            <select id="difficulty-select">
+              <option value="small">Compact &mdash; easier</option>
+              <option value="medium" selected>Standard</option>
+              <option value="large">Sprawling &mdash; harder</option>
+            </select>
+          </label>
+          <button id="btn-start" class="btn btn--primary">Begin Descent</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- GAME SCREEN                                                   -->
+    <!-- ============================================================ -->
+    <section id="screen-game" class="screen">
+      <header class="hud">
+        <div class="hud__group">
+          <span class="hud__label">Elapsed</span>
+          <span id="hud-timer" class="hud__value">00:00</span>
+        </div>
+        <div class="hud__group hud__group--center">
+          <span id="hud-status" class="hud__status">SIGNAL STABLE</span>
+        </div>
+        <div class="hud__group">
+          <span class="hud__label">Sublevel</span>
+          <span id="hud-level" class="hud__value">01</span>
+        </div>
+      </header>
+
+      <div class="canvas-wrap">
+        <canvas id="game-canvas"></canvas>
+      </div>
+
+      <p class="hint">Arrow keys / WASD to move &nbsp;&middot;&nbsp; Esc to abandon the attempt</p>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- GAME OVER SCREEN                                              -->
+    <!-- ============================================================ -->
+    <section id="screen-gameover" class="screen">
+      <div class="report report--outcome">
+        <div class="report__stamp report__stamp--bad">ATTEMPT TERMINATED</div>
+        <h1 class="outcome-title outcome-title--bad">CAUGHT</h1>
+        <p class="outcome-copy">Contact was made on Sublevel <span id="over-level">01</span> at
+          <span id="over-time">00:00</span>. The entity's last known path is logged below.</p>
+        <div class="report__actions">
+          <button id="btn-retry" class="btn btn--primary">Regenerate &amp; Retry</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- WIN SCREEN                                                    -->
+    <!-- ============================================================ -->
+    <section id="screen-win" class="screen">
+      <div class="report report--outcome">
+        <div class="report__stamp report__stamp--good">STAIRWELL REACHED</div>
+        <h1 class="outcome-title outcome-title--good">ESCAPED</h1>
+        <p class="outcome-copy">Sublevel <span id="win-level">01</span> cleared in
+          <span id="win-time">00:00</span>.</p>
+        <div class="report__actions">
+          <button id="btn-next" class="btn btn--primary">Descend Further</button>
+        </div>
+      </div>
+    </section>
+
+    <footer class="credits">
+      Procedural maze &middot; A* pursuit AI &middot; BFS line-of-sight &mdash; vanilla JS &amp; Canvas, no game engine
+    </footer>
+
+  </div>
+
+<script src="game.js"></script>
+</body>
+</html>
